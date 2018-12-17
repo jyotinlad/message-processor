@@ -1,12 +1,13 @@
 from datetime import datetime
 
+from logger import Logger
 from messageprocessor import MessageProcessor
 
 
 class ProcessMessages():
 
     def __init__(self):
-        pass
+        self.log = Logger.get()
 
     def launch(self):
         start_time = datetime.now()
@@ -16,14 +17,14 @@ class ProcessMessages():
 
             #TODO queue work
 
-            print("working {} queue".format(type))
+            self.log.info("working {} queue".format(type))
 
             #TODO process message
             payload = {}
             processor.process(payload)
 
-        end_time = datetime.now() - start_time
-        # print("run time {}".format(end_time.strftime("%H%M%S")))
+        run_time = datetime.min + (datetime.now() - start_time)
+        self.log.info("complete (run time: {})".format(run_time.strftime('%H:%M:%S')))
 
 
 if __name__ == "__main__":
