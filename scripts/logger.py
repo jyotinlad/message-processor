@@ -5,7 +5,7 @@ from sys import stdout
 
 class Logger:
 
-    LOG_FILENAME = "messageprocessor.log"
+    LOG_FILENAME = "message-processor.log"
     LOG_FILE = path.join("..", "logs", LOG_FILENAME)
 
     def __init__(self):
