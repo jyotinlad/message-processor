@@ -12,7 +12,7 @@ class MessageProcessor:
 
     @staticmethod
     def get(processor):
-        # TODO dynamically import
+        # TODO try dynamical import?
         # try:
         #     module_name = ".{}processor".format(processor.lower())
         #     print(module_name)
