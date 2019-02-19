@@ -2,7 +2,7 @@ from sqlite3 import connect
 from os import path
 
 
-DB_FILENAME = "message-processor.db"
+DB_FILENAME = "fruits.db"
 DB_FILE = path.join("..", "storage", DB_FILENAME)
 
 
