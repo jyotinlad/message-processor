@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
+from database import Database
 from datetime import date
-from json import dumps, load
 from os import path
 
 
@@ -12,6 +12,9 @@ class BaseProcessor(ABC):
     def __init__(self, type):
         self.type = type
 
+        self._table = "{}s".format(type.lower())
+        self._db = Database()
+
     @abstractmethod
     def parse(self, data):
         raise NotImplementedError()
@@ -22,15 +25,4 @@ class BaseProcessor(ABC):
             return o.__str__()
 
     def load(self, record):
-        data = []
-
-        filename = "{}.tsv".format(self.type)
-        file = path.join(_STORAGE_DIR, filename)
-        if path.isfile(file):
-            with open(file, "r") as fh:
-                data = load(fh)
-
-        data.append(record)
-
-        with open(file, "w+") as fh:
-            fh.write(dumps(data, default=self.converter, indent=4))
+        self._db.insert(self._table, record)

@@ -9,6 +9,7 @@ class KiwiProcessor(BaseProcessor):
         super().__init__("Kiwi")
 
     def parse(self, data):
+        data.pop("type")
         data["best_before"] = date.today() + timedelta(days=5)
 
         self.load(data)

@@ -9,6 +9,7 @@ class OrangeProcessor(BaseProcessor):
         super().__init__("Orange")
 
     def parse(self, data):
+        data.pop("type")
         data["best_before"] = date.today() + timedelta(days=7)
 
         self.load(data)

@@ -1,6 +1,9 @@
 from datetime import datetime
 from json import loads
 
+import sys
+sys.path.append("..")
+
 from logger import Logger
 from messageprocessor import MessageProcessor
 from queue import QueueWorker

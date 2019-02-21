@@ -9,6 +9,7 @@ class PearProcessor(BaseProcessor):
         super().__init__("Pear")
 
     def parse(self, data):
+        data.pop("type")
         data["best_before"] = date.today() + timedelta(days=10)
 
         self.load(data)

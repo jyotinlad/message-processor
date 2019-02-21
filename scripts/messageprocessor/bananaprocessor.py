@@ -9,6 +9,7 @@ class BananaProcessor(BaseProcessor):
         super().__init__("Banana")
 
     def parse(self, data):
+        data.pop("type")
         data["best_before"] = date.today() + timedelta(days=3)
 
         self.load(data)

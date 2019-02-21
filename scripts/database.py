@@ -26,10 +26,10 @@ class Database:
             """
                 CREATE TABLE apples (
                     id integer PRIMARY KEY,
-                    weight integer,
-                    condition text,
+                    best_before date,
                     colour text,
-                    best_before date
+                    condition text,
+                    weight integer
                 )
             """)
 
@@ -37,10 +37,10 @@ class Database:
             """
                 CREATE TABLE bananas (
                     id integer PRIMARY KEY,
-                    weight integer,
-                    condition text,
+                    best_before date,
                     colour text,
-                    best_before date
+                    condition text,
+                    weight integer
                 )
             """)
 
@@ -48,10 +48,10 @@ class Database:
             """
                 CREATE TABLE kiwis (
                     id integer PRIMARY KEY,
-                    weight integer,
-                    condition text,
+                    best_before date,
                     colour text,
-                    best_before date
+                    condition text,
+                    weight integer
                 )
             """)
 
@@ -59,10 +59,10 @@ class Database:
             """
                 CREATE TABLE oranges (
                     id integer PRIMARY KEY,
-                    weight integer,
-                    condition text,
+                    best_before date,
                     colour text,
-                    best_before date
+                    condition text,
+                    weight integer
                 )
             """)
 
@@ -70,10 +70,10 @@ class Database:
             """
                 CREATE TABLE pears (
                     id integer PRIMARY KEY,
-                    weight integer,
-                    condition text,
+                    best_before date,
                     colour text,
-                    best_before date
+                    condition text,
+                    weight integer
                 )
             """)
 
@@ -88,16 +88,16 @@ class Database:
         return [v[1] for v in recs]
 
     def insert(self, table, record):
-        # columns = "weight condition colour best_before".split()
-        columns = record.keys()
-        valid = all(c in self.get_table_columns(table) for c in columns)
+        keys = record.keys()
+        valid = all(k in self.get_table_columns(table) for k in keys)
         if not valid:
-            raise ValueError("invalid key(s) supplied")
+            invalid = list(set(keys) - set(self.get_table_columns(table)))
+            raise ValueError("invalid key(s) supplied in record: {}".format(invalid))
 
-        insert_columns = ", ".join(columns)
+        insert_columns = ", ".join(keys)
 
-        values = [record.get(k) for k in columns]
-        insert_values = ", ".join("?" * len(columns))
+        values = [record.get(k) for k in keys]
+        insert_values = ", ".join("?" * len(keys))
 
         cursor = self._con.cursor()
         cursor.execute(
@@ -111,19 +111,3 @@ class Database:
 
     def __del__(self):
         self._con.close()
-
-
-if __name__ == "__main__":
-    from datetime import date
-    db = Database()
-    record = {
-        "weight": 22,
-        "condition": "good",
-        "colour": "green",
-        "best_before": date(2019, 1, 1)
-    }
-    db.insert("apples", record)
-
-    print(db.get_table_columns("apples"))
-
-    test = 1
