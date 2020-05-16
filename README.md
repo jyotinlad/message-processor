@@ -1,4 +1,4 @@
 # Message Processor
 
 ## Overview
-A POC created to interact with queues (using Rabbit MQ) and process the messages within them.
+A process to interact with queues (using Rabbit MQ), parsing the messages within them and loading them into a SQLite database.
